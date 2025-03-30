@@ -21,3 +21,5 @@ window.addEventListener("load",()=>{
 		}
 });
 });
+  document.body.style.fontSize = fontSize;
+    document.body.style.color = fontColor;
