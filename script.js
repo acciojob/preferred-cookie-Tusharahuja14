@@ -1,32 +1,37 @@
-let fsize = document.getElementById("fontsize");
-let fcolor = document.getElementById("fontcolor");
-let submit = document.getElementById("submit");
+const fsize = document.getElementById("fontsize");
+const fcolor = document.getElementById("fontcolor");
+const submit = document.getElementById("submit");
 
-submit.addEventListener("click", saveCookies);
+// ✅ Save preferences in cookies
+submit.addEventListener("click", (event) => {
+    event.preventDefault();  // Prevent form submission
 
-function saveCookies() {
-    document.cookie = `fontsize=${fsize.value}; path=/`;
+    // Store font size and color in cookies
+    document.cookie = `fontsize=${fsize.value}px; path=/`;
     document.cookie = `fontcolor=${fcolor.value}; path=/`;
-    
-    // Apply styles to CSS variables
-    document.documentElement.style.setProperty('--fontsize', fsize.value);
-    document.documentElement.style.setProperty('--fontcolor', fcolor.value);
-}
 
+    // Apply the styles immediately
+    document.documentElement.style.setProperty('--fontsize', `${fsize.value}px`);
+    document.documentElement.style.setProperty('--fontcolor', fcolor.value);
+
+    alert("Preferences saved!");
+});
+
+// ✅ Load saved preferences on page load
 window.addEventListener("load", () => {
-    let cookies = document.cookie.split("; ");
-    
+    const cookies = document.cookie.split("; ");
+
     cookies.forEach(cookie => {
-        let [key, value] = cookie.split("=");
-        
+        const [key, value] = cookie.split("=");
+
         if (key === "fontsize") {
-            fsize.value = value;
-            document.documentElement.style.setProperty('--fontsize', value);  // Apply to CSS variable
+            fsize.value = parseInt(value);  // Remove "px" for the input field
+            document.documentElement.style.setProperty('--fontsize', value);
         }
-        
+
         if (key === "fontcolor") {
             fcolor.value = value;
-            document.documentElement.style.setProperty('--fontcolor', value);  // Apply to CSS variable
+            document.documentElement.style.setProperty('--fontcolor', value);
         }
     });
 });
