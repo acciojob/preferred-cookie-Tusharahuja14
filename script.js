@@ -9,17 +9,18 @@ function savecookies()
 	document.cookie=`fontcolor=${fcolor.value};path=/`;
 }
 window.addEventListener("load",()=>{
-	let cookies=document.cookie.split("; ").forEach(cookie=>{
+	let cookies=document.cookie.split("; ")
+		cookies.forEach(cookie=>{
 	let[key,value]=cookie.split("=");
 		if(key==="fontsize")
 		{
 			fsize.value=value;
+			document.body.style.fontSize=value;
 		}
 		if(key==="fontcolor")
 		{
 			fcolor.value=value;
+			document.body.style.color=value;
 		}
 });
 });
-  document.body.style.fontSize = fsize;
-    document.body.style.color = fcolor;
